@@ -68,8 +68,8 @@ def health_check():
 # -------------------------------------------------
 # Main endpoint
 # -------------------------------------------------
-@app.get("/predict", response_class=HTMLResponse)
-def campaign_analysis():
+@app.get("/predict")
+def data_analysis():
 
     train_data, test_data = load_data()
 
@@ -77,34 +77,4 @@ def campaign_analysis():
 
     prediction_data = get_prob_data(X_train, y_train, X_test, test_data)
 
-
-    rows = "".join(
-        f"<tr><td>{int(r[0])}</td><td>{r[1]}</td><td>{int(r[2])}</td></tr>"
-        for r in prediction_data.itertuples(index=False)
-    )
-
-    html_content = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Loan Default Prediction</title>
-        <style>
-            body {{ font-family: Arial, sans-serif; margin: 40px; }}
-            h2 {{ text-align: center; }}
-            th, td {{ border: 1px solid #ccc; padding: 8px; text-align: center; }}
-            table {{ border-collapse: collapse; width: 60%; margin: 0 auto; }}
-        </style>
-    </head>
-    <body>
-        <h2>Predicted Probability of Default</h2>
-        <table>
-            <tr style="background:#f4f4f4">
-                <th>SN</th><th>Probability of Default</th><th>Prediction</th>
-            </tr>
-            {rows}
-        </table>
-    </body>
-    </html>
-    """
-
-    return html_content
+    return prediction_data.to_dict(orient="records")
