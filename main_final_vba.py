@@ -24,11 +24,10 @@ class LoanData(BaseModel):
 #-------------------------------------------------
 #  Load the trained model + column order 
 #-------------------------------------------------
-#
-with open('model.pkl', 'rb') as f:
-    saved = pickle.load(f)
 
-rf_model = saved['model']
+with open('model.pkl', 'rb') as f:
+    rf_model = pickle.load(f)
+
 train_columns = list(rf_model.feature_names_in_)
 
 #--------------------------------------------------
