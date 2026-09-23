@@ -29,7 +29,7 @@ with open('model.pkl', 'rb') as f:
     saved = pickle.load(f)
 
 rf_model = saved['model']
-train_columns = saved['columns']
+train_columns = list(rf_model.feature_names_in_)
 
 #--------------------------------------------------
 # Define functions
